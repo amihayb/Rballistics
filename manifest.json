@@ -1,0 +1,18 @@
+{
+  "name": "Ballistic Calculator",
+  "short_name": "BalCalc",
+  "description": "Airborne ballistic fire solution calculator",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0e1520",
+  "theme_color": "#1a2535",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "images/RafLogo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

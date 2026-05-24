@@ -1,0 +1,427 @@
+/* ─── Design tokens (matching StyleSheet.css palette) ────────────────────── */
+:root {
+  --color-app-bg:    #f7faff;
+  --color-panel-bg:  #f7faff;
+  --color-nav-bg:    #ebf0f8;
+  --color-text-primary: #344563;
+  --color-text-active:  #202124;
+  --color-text-muted:   #6c757d;
+  --color-btn-hover:    #c9dbf9;
+  --color-border:       #ccc;
+  --color-primary:      #0066aa;
+  --color-primary-alpha: rgba(0,102,170,0.12);
+  --color-on-primary:   #fff;
+  --color-secondary:    #004d80;
+  --color-error:        #dc3545;
+  --shadow-elevated:    0 4px 16px rgba(0,0,0,0.12);
+
+  /* App-specific accent colours */
+  --color-ballistic:  #0066aa;
+  --color-tof:        #e67e22;
+  --color-roll:       #8e44ad;
+  --color-total:      #27ae60;
+
+  --nav-height: 56px;
+  --radius-card: 14px;
+  --font-mono: 'Courier New', Courier, monospace;
+}
+
+[data-theme="dark"] {
+  --color-app-bg:    #0e1520;
+  --color-panel-bg:  #131d2e;
+  --color-nav-bg:    #1a2535;
+  --color-text-primary: #c8d8f0;
+  --color-text-active:  #e0eeff;
+  --color-text-muted:   #5c6e8a;
+  --color-btn-hover:    #2c4168;
+  --color-border:       #1e2d44;
+  --color-primary:      #4a6fa5;
+  --color-primary-alpha: rgba(74,111,165,0.22);
+  --color-on-primary:   #fff;
+  --color-secondary:    #2d5080;
+  --color-error:        #c0392b;
+  --shadow-elevated:    0 4px 16px rgba(0,0,0,0.45);
+
+  --color-ballistic:  #4a9fd4;
+  --color-tof:        #f39c12;
+  --color-roll:       #bb8fce;
+  --color-total:      #2ecc71;
+}
+
+/* ─── Reset & base ───────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  font-family: "Lato", "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  background-color: var(--color-app-bg);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+/* ─── Top Nav ────────────────────────────────────────────────────────────── */
+.topnav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-height);
+  background-color: var(--color-nav-bg);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.raf-logo {
+  height: 38px;
+  flex-shrink: 0;
+}
+
+.nav-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+  cursor: pointer;
+  user-select: none;
+}
+.nav-title:hover { opacity: 1; }
+
+.headImg {
+  height: 32px;
+  flex-shrink: 0;
+}
+
+
+/* ─── Main scroll area ───────────────────────────────────────────────────── */
+.main-content {
+  margin-top: var(--nav-height);
+  padding: 16px 14px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ─── Cards ──────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--color-panel-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  box-shadow: var(--shadow-elevated);
+}
+
+.section-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 6px;
+}
+
+/* ─── Ammo dropdown ──────────────────────────────────────────────────────── */
+.select-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select-wrap select {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--color-app-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  color: var(--color-text-active);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 40px 12px 14px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.select-wrap select:focus { border-color: var(--color-primary); }
+
+.select-arrow {
+  position: absolute;
+  right: 14px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+/* ─── Stepper inputs ─────────────────────────────────────────────────────── */
+.stepper-wrap {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.step-btn {
+  flex-shrink: 0;
+  width: 48px;
+  background: var(--color-app-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  color: var(--color-text-primary);
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s, border-color 0.12s, transform 0.08s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: none;
+}
+.step-btn:hover  { background: var(--color-btn-hover); border-color: var(--color-primary); }
+.step-btn:active { background: var(--color-primary-alpha); transform: scale(0.93); }
+.step-btn.held   { background: var(--color-primary-alpha); border-color: var(--color-primary); }
+
+.input-inner {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+/* ─── Inputs ─────────────────────────────────────────────────────────────── */
+.inputs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.span-2 { /* kept for clarity, no-op in flex column */ }
+
+.input-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.input-inner input {
+  width: 100%;
+  background: var(--color-app-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: 9px;
+  color: var(--color-text-active);
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  padding: 11px 52px 11px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+  -moz-appearance: textfield;
+}
+.input-inner input::-webkit-outer-spin-button,
+.input-inner input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.input-inner input:focus { border-color: var(--color-primary); }
+.input-inner input::placeholder { color: var(--color-text-muted); font-weight: 400; }
+
+.input-unit {
+  position: absolute;
+  right: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.input-hint {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  padding-left: 2px;
+}
+
+/* ─── Calculate button ───────────────────────────────────────────────────── */
+.calc-btn {
+  width: 100%;
+  padding: 15px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  border-radius: 11px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.08s;
+  -webkit-tap-highlight-color: transparent;
+}
+.calc-btn:hover  { background: var(--color-secondary); }
+.calc-btn:active { transform: scale(0.97); }
+
+/* ─── Reticle canvas ─────────────────────────────────────────────────────── */
+.reticle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+#reticleCanvas {
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  max-width: 100%;
+  height: auto;
+}
+
+.reticle-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.reticle-legend span { display: flex; align-items: center; gap: 5px; }
+.legend-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dot-ballistic { background: var(--color-ballistic); }
+.dot-tof       { background: var(--color-tof); }
+.dot-total     { background: var(--color-total); }
+
+/* ─── Results table ──────────────────────────────────────────────────────── */
+.results-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px 0;
+  margin-bottom: 14px;
+}
+
+.results-header-row,
+.results-row {
+  display: contents;
+}
+
+.col-head {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 6px 4px 6px 0;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+}
+.col-head:first-child { text-align: left; }
+
+.row-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 8px 4px 8px 0;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(128,128,128,0.12);
+}
+.row-total .row-label {
+  color: var(--color-text-active);
+  font-size: 13px;
+}
+
+.result-val {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+  padding: 8px 4px;
+  border-bottom: 1px solid rgba(128,128,128,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-big {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* Row accent colours on the label only */
+.row-ballistic .row-label { color: var(--color-ballistic); }
+.row-ballistic .result-val { color: var(--color-ballistic); }
+.row-tof       .row-label { color: var(--color-tof); }
+.row-tof       .result-val { color: var(--color-tof); }
+.row-roll      .row-label { color: var(--color-roll); }
+.row-roll      .result-val { color: var(--color-roll); }
+.row-total     .result-val { color: var(--color-total); }
+
+/* ─── TOF badge ──────────────────────────────────────────────────────────── */
+.tof-badge {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  background: var(--color-primary-alpha);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+/* ─── No-result hint ─────────────────────────────────────────────────────── */
+.no-result-hint {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  padding: 8px 0 0;
+}
+.no-result-hint strong { color: var(--color-primary); }
+
+/* ─── Results card hidden until first calc ───────────────────────────────── */
+.results-card { display: none; }
+.results-card.visible { display: block; }
+
+/* ─── Range error ────────────────────────────────────────────────────────── */
+.range-error {
+  color: var(--color-error);
+  font-size: 11px;
+  margin-top: 4px;
+  display: none;
+}
+.range-error.visible { display: block; }

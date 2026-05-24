@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Ballistic Calculator</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1a2535" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Ballistic Calculator" />
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="Ballistic Calculator" />
+  <meta property="og:description" content="A mobile-first ballistic fire solution calculator with TOF lead, roll correction, and reticle visualisation" />
+  <meta property="og:image" content="https://amihayb.github.io/Rballistics/images/logo-title-1200x630.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://amihayb.github.io/Rballistics/" />
+
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <nav class="topnav">
+    <img src="images/RafLogo.svg" class="raf-logo" alt="RAF Logo" />
+    <div class="nav-center">
+      <span class="nav-title" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">Ballistic Calculator</span>
+    </div>
+    <img src="images/logo-title.svg" class="headImg" alt="Title Logo" />
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- AMMO SELECTOR -->
+    <section class="card ammo-card">
+      <div class="section-label">AMMUNITION</div>
+      <div class="select-wrap">
+        <select id="ammoSelect">
+          <!-- Populated by JS -->
+        </select>
+        <span class="select-arrow">▾</span>
+      </div>
+    </section>
+
+    <!-- INPUTS -->
+    <section class="card inputs-card">
+      <div class="section-label">FIRE SOLUTION INPUTS</div>
+      <div class="inputs-grid">
+
+        <!-- Range -->
+        <div class="input-group span-2">
+          <label class="input-label" for="inputRange">Range</label>
+          <div class="stepper-wrap">
+            <button class="step-btn" data-target="inputRange" data-step="-100" data-fine="-10" aria-label="Decrease range">−</button>
+            <div class="input-inner">
+              <input type="number" id="inputRange" inputmode="numeric" pattern="[0-9]*"
+                min="0" max="2500" placeholder="0" />
+              <span class="input-unit">m</span>
+            </div>
+            <button class="step-btn" data-target="inputRange" data-step="100" data-fine="10" aria-label="Increase range">+</button>
+          </div>
+          <div class="input-hint">Tap ±100 m &nbsp;·&nbsp; Hold ±10 m</div>
+        </div>
+
+        <!-- Roll -->
+        <div class="input-group span-2">
+          <label class="input-label" for="inputRoll">Platform Roll</label>
+          <div class="stepper-wrap">
+            <button class="step-btn" data-target="inputRoll" data-step="-1" data-fine="-0.1" aria-label="Decrease roll">−</button>
+            <div class="input-inner">
+              <input type="number" id="inputRoll" inputmode="decimal"
+                min="-15" max="15" placeholder="0.0" />
+              <span class="input-unit">deg</span>
+            </div>
+            <button class="step-btn" data-target="inputRoll" data-step="1" data-fine="0.1" aria-label="Increase roll">+</button>
+          </div>
+          <div class="input-hint">Tap ±1° &nbsp;·&nbsp; Hold ±0.1°</div>
+        </div>
+
+        <!-- Vy -->
+        <div class="input-group span-2">
+          <label class="input-label" for="inputVy">Target Vel. Vertical (Vy)</label>
+          <div class="stepper-wrap">
+            <button class="step-btn" data-target="inputVy" data-step="-1" data-fine="-0.1" aria-label="Decrease Vy">−</button>
+            <div class="input-inner">
+              <input type="number" id="inputVy" inputmode="decimal" placeholder="0.00" />
+              <span class="input-unit">mrad/s</span>
+            </div>
+            <button class="step-btn" data-target="inputVy" data-step="1" data-fine="0.1" aria-label="Increase Vy">+</button>
+          </div>
+          <div class="input-hint">↑ up / ↓ down &nbsp;·&nbsp; Tap ±1 &nbsp;·&nbsp; Hold ±0.1</div>
+        </div>
+
+        <!-- Vz -->
+        <div class="input-group span-2">
+          <label class="input-label" for="inputVz">Target Vel. Lateral (Vz)</label>
+          <div class="stepper-wrap">
+            <button class="step-btn" data-target="inputVz" data-step="-1" data-fine="-0.1" aria-label="Decrease Vz">−</button>
+            <div class="input-inner">
+              <input type="number" id="inputVz" inputmode="decimal" placeholder="0.00" />
+              <span class="input-unit">mrad/s</span>
+            </div>
+            <button class="step-btn" data-target="inputVz" data-step="1" data-fine="0.1" aria-label="Increase Vz">+</button>
+          </div>
+          <div class="input-hint">→ right / ← left &nbsp;·&nbsp; Tap ±1 &nbsp;·&nbsp; Hold ±0.1</div>
+        </div>
+
+      </div>
+
+      <button class="calc-btn" id="calcBtn">CALCULATE</button>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="card results-card" id="resultsCard">
+      <div class="section-label">FIRE SOLUTION</div>
+
+      <!-- Numeric breakdown -->
+      <div class="results-table">
+
+        <div class="results-header-row">
+          <span></span>
+          <span class="col-head">PITCH (elev)</span>
+          <span class="col-head">YAW (azm)</span>
+        </div>
+
+        <div class="results-row row-ballistic">
+          <span class="row-label">Pure Ballistic</span>
+          <span class="result-val" id="resPitchBallistic">—</span>
+          <span class="result-val" id="resYawBallistic">—</span>
+        </div>
+
+        <div class="results-row row-tof">
+          <span class="row-label">TOF Lead</span>
+          <span class="result-val" id="resPitchTOF">—</span>
+          <span class="result-val" id="resYawTOF">—</span>
+        </div>
+
+        <div class="results-row row-roll">
+          <span class="row-label">Roll Effect</span>
+          <span class="result-val" id="resPitchRoll">—</span>
+          <span class="result-val" id="resYawRoll">—</span>
+        </div>
+
+        <div class="results-row row-total">
+          <span class="row-label">⬛ TOTAL</span>
+          <span class="result-val result-big" id="resPitchTotal">—</span>
+          <span class="result-val result-big" id="resYawTotal">—</span>
+        </div>
+
+      </div>
+
+      <!-- TOF badge -->
+      <div class="tof-badge">
+        TOF <span id="resTOF">—</span> s &nbsp;|&nbsp; Interpolated from <span id="resRangeInterp">—</span> m
+      </div>
+
+      <!-- Visual reticle -->
+      <div class="reticle-container">
+        <canvas id="reticleCanvas" width="280" height="280"></canvas>
+        <div class="reticle-legend">
+          <span class="legend-dot dot-ballistic"></span><span>Pure Ballistic</span>
+          <span class="legend-dot dot-tof"></span><span>TOF Lead</span>
+          <span class="legend-dot dot-total"></span><span>Total Solution</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Status message when no calc yet -->
+    <div class="no-result-hint" id="noResultHint">
+      Enter values above and tap <strong>CALCULATE</strong>
+    </div>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
