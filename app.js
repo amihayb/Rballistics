@@ -202,7 +202,7 @@ function bindEvents() {
 
   ['inputRange', 'inputRoll', 'inputVy', 'inputVz'].forEach(id => {
     const inp = document.getElementById(id);
-    inp.addEventListener('input', scheduleCalc);
+    inp.addEventListener('input', () => { saveInputs(); scheduleCalc(); });
     inp.addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
   });
 }
