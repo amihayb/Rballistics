@@ -111,6 +111,36 @@
           <div class="input-hint">→ right / ← left &nbsp;·&nbsp; Tap ±1 &nbsp;·&nbsp; Hold ±0.1</div>
         </div>
 
+        <!-- Parallax -->
+        <div class="input-group parallax-group">
+          <label class="input-label">Parallax X &nbsp;·&nbsp; Y &nbsp;·&nbsp; Z</label>
+          <div class="parallax-row">
+
+            <div class="parallax-item">
+              <div class="input-inner">
+                <input type="number" id="inputPX" inputmode="decimal" placeholder="0" />
+                <span class="input-unit">mm · X</span>
+              </div>
+            </div>
+
+            <div class="parallax-item">
+              <div class="input-inner">
+                <input type="number" id="inputPY" inputmode="decimal" placeholder="624" />
+                <span class="input-unit">mm · Y</span>
+              </div>
+            </div>
+
+            <div class="parallax-item">
+              <div class="input-inner">
+                <input type="number" id="inputPZ" inputmode="decimal" placeholder="-115" />
+                <span class="input-unit">mm · Z</span>
+              </div>
+            </div>
+
+          </div>
+          <div class="input-hint">Yaw = 0.001·Y/R &nbsp;·&nbsp; Pitch = 0.001·Z/R</div>
+        </div>
+
       </div>
 
       <button class="calc-btn" id="calcBtn">CALCULATE</button>
@@ -145,6 +175,18 @@
           <span class="row-label">Roll Effect</span>
           <span class="result-val" id="resPitchRoll">—</span>
           <span class="result-val" id="resYawRoll">—</span>
+        </div>
+
+        <div class="results-row row-subtotal">
+          <span class="row-label">⬜ Ballistic Total</span>
+          <span class="result-val" id="resPitchSubTotal">—</span>
+          <span class="result-val" id="resYawSubTotal">—</span>
+        </div>
+
+        <div class="results-row row-parallax">
+          <span class="row-label">Parallax</span>
+          <span class="result-val" id="resPitchParallax">—</span>
+          <span class="result-val" id="resYawParallax">—</span>
         </div>
 
         <div class="results-row row-total">

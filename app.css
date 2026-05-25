@@ -19,6 +19,7 @@
   --color-ballistic:  #0066aa;
   --color-tof:        #e67e22;
   --color-roll:       #8e44ad;
+  --color-parallax:   #16a085;
   --color-total:      #27ae60;
 
   --nav-height: 56px;
@@ -45,6 +46,7 @@
   --color-ballistic:  #4a9fd4;
   --color-tof:        #f39c12;
   --color-roll:       #bb8fce;
+  --color-parallax:   #1abc9c;
   --color-total:      #2ecc71;
 }
 
@@ -202,10 +204,11 @@ html, body {
 
 .input-inner {
   flex: 1;
-  position: relative;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   min-width: 0;
+  gap: 3px;
 }
 
 /* ─── Inputs ─────────────────────────────────────────────────────────────── */
@@ -239,7 +242,8 @@ html, body {
   font-family: var(--font-mono);
   font-size: 20px;
   font-weight: 700;
-  padding: 11px 52px 11px 12px;
+  padding: 11px 12px;
+  text-align: center;
   outline: none;
   transition: border-color 0.15s;
   -moz-appearance: textfield;
@@ -250,21 +254,29 @@ html, body {
 .input-inner input::placeholder { color: var(--color-text-muted); font-weight: 400; }
 
 .input-unit {
-  position: absolute;
-  right: 10px;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-text-muted);
-  pointer-events: none;
+  text-align: center;
   white-space: nowrap;
 }
 
 .input-hint {
   font-size: 10px;
   color: var(--color-text-muted);
-  padding-left: 2px;
+  text-align: center;
+}
+
+.parallax-group {
+  grid-column: 1 / -1;
+}
+
+.parallax-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
 }
 
 /* ─── Calculate button ───────────────────────────────────────────────────── */
@@ -387,6 +399,10 @@ html, body {
 .row-tof       .result-val { color: var(--color-tof); }
 .row-roll      .row-label { color: var(--color-roll); }
 .row-roll      .result-val { color: var(--color-roll); }
+.row-subtotal  .row-label { color: var(--color-text-primary); }
+.row-subtotal  .result-val { color: var(--color-text-primary); font-weight: 700; }
+.row-parallax  .row-label { color: var(--color-parallax); }
+.row-parallax  .result-val { color: var(--color-parallax); }
 .row-total     .result-val { color: var(--color-total); }
 
 /* ─── TOF badge ──────────────────────────────────────────────────────────── */

@@ -7,8 +7,13 @@ const STORAGE_KEYS = {
   ROLL:  'bc_roll',
   VY:    'bc_vy',
   VZ:    'bc_vz',
+  PX:    'bc_px',
+  PY:    'bc_py',
+  PZ:    'bc_pz',
   THEME: 'bc_theme',
 };
+
+const PARALLAX_DEFAULTS = { PX: 0, PY: 624, PZ: -115 };
 
 const DEG2RAD = Math.PI / 180;
 
@@ -129,10 +134,15 @@ function restoreInputs() {
     const val = localStorage.getItem(STORAGE_KEYS[key]);
     if (val !== null) document.getElementById(id).value = val;
   });
+  [['PX','inputPX'], ['PY','inputPY'], ['PZ','inputPZ']].forEach(([key, id]) => {
+    const stored = localStorage.getItem(STORAGE_KEYS[key]);
+    document.getElementById(id).value = stored !== null ? stored : PARALLAX_DEFAULTS[key];
+  });
 }
 
 function saveInputs() {
-  [['RANGE','inputRange'], ['ROLL','inputRoll'], ['VY','inputVy'], ['VZ','inputVz']].forEach(([key, id]) => {
+  [['RANGE','inputRange'], ['ROLL','inputRoll'], ['VY','inputVy'], ['VZ','inputVz'],
+   ['PX','inputPX'], ['PY','inputPY'], ['PZ','inputPZ']].forEach(([key, id]) => {
     localStorage.setItem(STORAGE_KEYS[key], document.getElementById(id).value);
   });
 }
@@ -177,6 +187,10 @@ function bindSteppers() {
     // Pointer events (covers both mouse and touch uniformly)
     btn.addEventListener('pointerdown', e => {
       e.preventDefault();
+      // Block keyboard on mobile by briefly making the input readonly
+      const input = document.getElementById(btn.dataset.target);
+      input.setAttribute('readonly', '');
+      setTimeout(() => input.removeAttribute('readonly'), 100);
       applyStep(false);                          // immediate coarse step on tap
       holdTimer = setTimeout(startHold, HOLD_DELAY);
     });
@@ -200,7 +214,7 @@ function bindEvents() {
     }, 300);
   }
 
-  ['inputRange', 'inputRoll', 'inputVy', 'inputVz'].forEach(id => {
+  ['inputRange', 'inputRoll', 'inputVy', 'inputVz', 'inputPX', 'inputPY', 'inputPZ'].forEach(id => {
     const inp = document.getElementById(id);
     inp.addEventListener('input', () => { saveInputs(); scheduleCalc(); });
     inp.addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
@@ -237,6 +251,8 @@ function calculate() {
   const rollDeg  = parseFloat(document.getElementById('inputRoll').value) || 0;
   const Vy       = parseFloat(document.getElementById('inputVy').value)   || 0;
   const Vz       = parseFloat(document.getElementById('inputVz').value)   || 0;
+  const PY       = parseFloat(document.getElementById('inputPY').value);
+  const PZ       = parseFloat(document.getElementById('inputPZ').value);
 
   if (isNaN(rangeVal) || rangeVal < 0) {
     alert('Please enter a valid range (≥ 0 m).');
@@ -268,15 +284,20 @@ function calculate() {
   const pitchRollDelta = pitchAfterRoll - SE_pure;
   const yawRollDelta   = yawAfterRoll   - Drift_pure;
 
+  // Parallax correction (mm → mrad: mm / m)
+  const yawParallax   = isNaN(PY) ? 0 : PY / rangeVal;
+  const pitchParallax = isNaN(PZ) ? 0 : PZ / rangeVal;
+
   // Total
-  const pitchTotal = pitchAfterRoll + pitchLead;
-  const yawTotal   = yawAfterRoll   + yawLead;
+  const pitchTotal = pitchAfterRoll + pitchLead + pitchParallax;
+  const yawTotal   = yawAfterRoll   + yawLead   + yawParallax;
 
   const result = {
     SE_pure, Drift_pure, TOF,
     pitchLead, yawLead,
     pitchRollDelta, yawRollDelta,
     pitchAfterRoll, yawAfterRoll,
+    pitchParallax, yawParallax,
     pitchTotal, yawTotal,
     range: rangeVal, rollDeg,
   };
@@ -301,6 +322,10 @@ function displayResults(r) {
   document.getElementById('resYawTOF').textContent         = fmt(r.yawLead);
   document.getElementById('resPitchRoll').textContent      = fmt(r.pitchRollDelta);
   document.getElementById('resYawRoll').textContent        = fmt(r.yawRollDelta);
+  document.getElementById('resPitchSubTotal').textContent  = fmt(r.pitchAfterRoll + r.pitchLead);
+  document.getElementById('resYawSubTotal').textContent    = fmt(r.yawAfterRoll   + r.yawLead);
+  document.getElementById('resPitchParallax').textContent  = fmt(r.pitchParallax);
+  document.getElementById('resYawParallax').textContent    = fmt(r.yawParallax);
   document.getElementById('resPitchTotal').textContent     = fmt(r.pitchTotal);
   document.getElementById('resYawTotal').textContent       = fmt(r.yawTotal);
   document.getElementById('resTOF').textContent            = r.TOF.toFixed(3);
