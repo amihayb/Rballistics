@@ -8,26 +8,36 @@ Designed for fast field use — no server, no install, works offline as a PWA.
 ### Fire Solution
 - **Ammunition selection** from a pre-loaded ballistic table (CSV)
 - **Pure ballistic** correction (elevation and azimuth) interpolated from range
-- **TOF lead** — target velocity correction (Vy vertical, Vz lateral) multiplied by time of flight
+- **TOF lead** — target velocity correction (Vz lateral / Vy vertical) multiplied by time of flight
 - **Roll effect** — corrects ballistic and drift values for platform roll angle
-- **Total solution** = ballistic + TOF lead + roll effect, displayed in mrad
+- **Parallax correction** — optical parallax offset (X/Y/Z in mm) converted to mrad at range:
+  - Yaw correction: `0.001 × Y / range`
+  - Pitch correction: `0.001 × Z / range`
+- **Total solution** = ballistic + TOF lead + roll effect + parallax, displayed in mrad
 
 ### Results Display
-- **Numeric table** — breakdown of each component (Pitch / Yaw) in mrad
+- **Numeric table** — per-component breakdown (Yaw / Pitch) in mrad:
+  - Pure Ballistic
+  - TOF Lead
+  - Roll Effect
+  - Ballistic Total (sub-total before parallax)
+  - Parallax
+  - **TOTAL**
 - **TOF badge** — time of flight and interpolated range
 - **Reticle canvas** — visual 2D plot of pure ballistic, TOF lead, and total solution points
 
 ### Inputs & Controls
-- **Range** — tap ±100 m, hold for ±10 m
-- **Platform Roll** — tap ±1°, hold for ±0.1°
-- **Target Velocity Vy / Vz** — tap ±1 mrad/s, hold for ±0.1 mrad/s
+- **2×2 input grid** — Range, Platform Roll, Target Vel. Yaw (Vz), Target Vel. Pitch (Vy)
+- **± stepper buttons** — tap for coarse step, hold for fine step
+- **Parallax row** — three plain numeric inputs (X / Y / Z) with defaults 0 / 624 / −115 mm
 - **Auto-calculate** — result updates automatically 300 ms after any input change
 - **CALCULATE button** — manual trigger
+- Stepper buttons do **not** open the mobile keyboard
 
 ### App
 - **Dark / Light theme** — tap the title "Ballistic Calculator" in the nav bar to toggle
 - **PWA / offline** — installable via browser, works without internet after first load
-- **Input persistence** — last values and ammo selection are saved across sessions
+- **Input persistence** — all values (including parallax) are saved to `localStorage` and restored on reload
 
 ## File Structure
 ```

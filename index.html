@@ -61,11 +61,10 @@
             <div class="input-inner">
               <input type="number" id="inputRange" inputmode="numeric" pattern="[0-9]*"
                 min="0" max="2500" placeholder="0" />
-              <span class="input-unit">m</span>
             </div>
             <button class="step-btn" data-target="inputRange" data-step="100" data-fine="10" aria-label="Increase range">+</button>
           </div>
-          <div class="input-hint">Tap ±100 m &nbsp;·&nbsp; Hold ±10 m</div>
+          <span class="input-unit">m</span>
         </div>
 
         <!-- Roll -->
@@ -76,39 +75,36 @@
             <div class="input-inner">
               <input type="number" id="inputRoll" inputmode="decimal"
                 min="-15" max="15" placeholder="0.0" />
-              <span class="input-unit">deg</span>
             </div>
             <button class="step-btn" data-target="inputRoll" data-step="1" data-fine="0.1" aria-label="Increase roll">+</button>
           </div>
-          <div class="input-hint">Tap ±1° &nbsp;·&nbsp; Hold ±0.1°</div>
-        </div>
-
-        <!-- Vy -->
-        <div class="input-group">
-          <label class="input-label" for="inputVy">Target Vel. Vertical (Vy)</label>
-          <div class="stepper-wrap">
-            <button class="step-btn" data-target="inputVy" data-step="-1" data-fine="-0.1" aria-label="Decrease Vy">−</button>
-            <div class="input-inner">
-              <input type="number" id="inputVy" inputmode="decimal" placeholder="0.00" />
-              <span class="input-unit">mrad/s</span>
-            </div>
-            <button class="step-btn" data-target="inputVy" data-step="1" data-fine="0.1" aria-label="Increase Vy">+</button>
-          </div>
-          <div class="input-hint">↑ up / ↓ down &nbsp;·&nbsp; Tap ±1 &nbsp;·&nbsp; Hold ±0.1</div>
+          <span class="input-unit">deg</span>
         </div>
 
         <!-- Vz -->
         <div class="input-group">
-          <label class="input-label" for="inputVz">Target Vel. Lateral (Vz)</label>
+          <label class="input-label" for="inputVz">Target Vel. Yaw (Vz)</label>
           <div class="stepper-wrap">
             <button class="step-btn" data-target="inputVz" data-step="-1" data-fine="-0.1" aria-label="Decrease Vz">−</button>
             <div class="input-inner">
               <input type="number" id="inputVz" inputmode="decimal" placeholder="0.00" />
-              <span class="input-unit">mrad/s</span>
             </div>
             <button class="step-btn" data-target="inputVz" data-step="1" data-fine="0.1" aria-label="Increase Vz">+</button>
           </div>
-          <div class="input-hint">→ right / ← left &nbsp;·&nbsp; Tap ±1 &nbsp;·&nbsp; Hold ±0.1</div>
+          <span class="input-unit">mrad/s</span>
+        </div>
+
+        <!-- Vy -->
+        <div class="input-group">
+          <label class="input-label" for="inputVy">Target Vel. Pitch (Vy)</label>
+          <div class="stepper-wrap">
+            <button class="step-btn" data-target="inputVy" data-step="-1" data-fine="-0.1" aria-label="Decrease Vy">−</button>
+            <div class="input-inner">
+              <input type="number" id="inputVy" inputmode="decimal" placeholder="0.00" />
+            </div>
+            <button class="step-btn" data-target="inputVy" data-step="1" data-fine="0.1" aria-label="Increase Vy">+</button>
+          </div>
+          <span class="input-unit">mrad/s</span>
         </div>
 
         <!-- Parallax -->
@@ -155,44 +151,44 @@
 
         <div class="results-header-row">
           <span></span>
-          <span class="col-head">PITCH (elev)</span>
           <span class="col-head">YAW (azm)</span>
+          <span class="col-head">PITCH (elev)</span>
         </div>
 
         <div class="results-row row-ballistic">
           <span class="row-label">Pure Ballistic</span>
-          <span class="result-val" id="resPitchBallistic">—</span>
           <span class="result-val" id="resYawBallistic">—</span>
+          <span class="result-val" id="resPitchBallistic">—</span>
         </div>
 
         <div class="results-row row-tof">
           <span class="row-label">TOF Lead</span>
-          <span class="result-val" id="resPitchTOF">—</span>
           <span class="result-val" id="resYawTOF">—</span>
+          <span class="result-val" id="resPitchTOF">—</span>
         </div>
 
         <div class="results-row row-roll">
           <span class="row-label">Roll Effect</span>
-          <span class="result-val" id="resPitchRoll">—</span>
           <span class="result-val" id="resYawRoll">—</span>
+          <span class="result-val" id="resPitchRoll">—</span>
         </div>
 
         <div class="results-row row-subtotal">
           <span class="row-label">⬜ Ballistic Total</span>
-          <span class="result-val" id="resPitchSubTotal">—</span>
           <span class="result-val" id="resYawSubTotal">—</span>
+          <span class="result-val" id="resPitchSubTotal">—</span>
         </div>
 
         <div class="results-row row-parallax">
           <span class="row-label">Parallax</span>
-          <span class="result-val" id="resPitchParallax">—</span>
           <span class="result-val" id="resYawParallax">—</span>
+          <span class="result-val" id="resPitchParallax">—</span>
         </div>
 
         <div class="results-row row-total">
           <span class="row-label">⬛ TOTAL</span>
-          <span class="result-val result-big" id="resPitchTotal">—</span>
           <span class="result-val result-big" id="resYawTotal">—</span>
+          <span class="result-val result-big" id="resPitchTotal">—</span>
         </div>
 
       </div>

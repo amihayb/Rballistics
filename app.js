@@ -130,7 +130,7 @@ function buildAmmoDropdown() {
 
 // ─── Input persistence ────────────────────────────────────────────────────────
 function restoreInputs() {
-  [['Range','inputRange'], ['Roll','inputRoll'], ['Vy','inputVy'], ['Vz','inputVz']].forEach(([key, id]) => {
+  [['RANGE','inputRange'], ['ROLL','inputRoll'], ['VY','inputVy'], ['VZ','inputVz']].forEach(([key, id]) => {
     const val = localStorage.getItem(STORAGE_KEYS[key]);
     if (val !== null) document.getElementById(id).value = val;
   });
